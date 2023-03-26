@@ -42,7 +42,7 @@ export const ProductsActionCreators = {
       dispatch(ProductsActionCreators.setLoading(true))
       const response = await fetch(PRODUCTS_API)
       const products = await response.json()
-      dispatch(ProductsActionCreators.setProducts(products))
+      dispatch(ProductsActionCreators.setProducts(products.products))
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
     }

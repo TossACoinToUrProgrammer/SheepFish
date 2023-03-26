@@ -1,10 +1,11 @@
 import React from 'react';
-import './App.css';
+
+import ProductsPage from 'pages/products';
 
 function App() {
   return (
-    <div className="App">
-
+    <div>
+      <ProductsPage />
     </div>
   );
 }
