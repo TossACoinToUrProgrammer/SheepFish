@@ -43,7 +43,6 @@ export const ProductsActionCreators = {
       const response = await fetch(PRODUCTS_API)
       const products = await response.json()
       dispatch(ProductsActionCreators.setProducts(products))
-      dispatch(ProductsActionCreators.setLoading(false))
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
     }
@@ -57,7 +56,6 @@ export const ProductsActionCreators = {
       if (res.status === 201) {
         dispatch(ProductsActionCreators.deleteProduct(id))
       }
-      dispatch(ProductsActionCreators.setLoading(false))
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
     }
@@ -73,7 +71,6 @@ export const ProductsActionCreators = {
       if (res.status === 201) {
         dispatch(ProductsActionCreators.updateProduct(product))
       }
-      dispatch(ProductsActionCreators.setLoading(false))
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
     }
@@ -89,7 +86,6 @@ export const ProductsActionCreators = {
       if (res.status === 201) {
         dispatch(ProductsActionCreators.addProduct(product))
       }
-      dispatch(ProductsActionCreators.setLoading(false))
     } catch (error) {
         dispatch(ProductsActionCreators.setError("Something went wrong"))
     }
