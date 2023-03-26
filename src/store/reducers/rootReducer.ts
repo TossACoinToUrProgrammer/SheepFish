@@ -1,5 +1,4 @@
 import { combineReducers } from "redux"
+import productsReducer from "./products"
 
-export const rootReducer = combineReducers({})
-
-export type RootState = ReturnType<typeof rootReducer>
+export const rootReducer = combineReducers({ products: productsReducer })
