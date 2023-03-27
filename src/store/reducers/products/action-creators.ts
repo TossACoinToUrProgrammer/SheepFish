@@ -1,7 +1,7 @@
 import { IProduct } from "shared/models"
 import { AppDispatch } from "store"
 import {
-    AddProductAction,
+  AddProductAction,
   DeleteProductAction,
   Filters,
   ProductsActionsEnum,
@@ -10,6 +10,7 @@ import {
   SetFiltersAction,
   SetLoadingAction,
   SetProductsAction,
+  SetSearchAction,
   UpdateProductAction,
 } from "./types"
 
@@ -31,6 +32,10 @@ export const ProductsActionCreators = {
   setFilters: (filters: Filters): SetFiltersAction => ({
     type: ProductsActionsEnum.SET_FILTERS,
     payload: filters,
+  }),
+  setSearch: (search: string): SetSearchAction => ({
+    type: ProductsActionsEnum.SET_SEARCH,
+    payload: search,
   }),
   setCategories: (categories: string[]): SetCategories => ({
     type: ProductsActionsEnum.SET_CATEGORIES,
@@ -108,7 +113,7 @@ export const ProductsActionCreators = {
         dispatch(ProductsActionCreators.addProduct(product))
       }
     } catch (error) {
-        dispatch(ProductsActionCreators.setError("Something went wrong"))
+      dispatch(ProductsActionCreators.setError("Something went wrong"))
     }
   },
 }

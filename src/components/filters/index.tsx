@@ -5,7 +5,7 @@ import { useTypedSelector } from 'hooks/useTypedSelector'
 import styles from './styles.module.scss'
 
 interface FiltersProps {
-    categories: string[]
+    categories: string[] | null
 }
 
 const Filters: React.FC<FiltersProps> = ({ categories }) => {
@@ -44,7 +44,7 @@ const Filters: React.FC<FiltersProps> = ({ categories }) => {
             <div className={styles.filters}>
                 <select onChange={onCategoryChange}>
                     <option placeholder='Filters' value={'all'}>All Categories</option>
-                    {categories.map(category =>
+                    {categories && categories.map(category =>
                         <option value={category} key={category}>{category}</option>
                     )}
                 </select>

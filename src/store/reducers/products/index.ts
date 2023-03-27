@@ -4,7 +4,8 @@ const initialState: ProductsState = {
   products: null,
   isLoading: false,
   filters: {},
-  categories: null
+  categories: null,
+  search: "",
 }
 
 export default function productsReducer(
@@ -50,6 +51,9 @@ export default function productsReducer(
 
     case ProductsActionsEnum.SET_CATEGORIES:
       return { ...state, categories: action.payload }
+
+    case ProductsActionsEnum.SET_SEARCH:
+      return { ...state, search: action.payload }
 
     default:
       return state

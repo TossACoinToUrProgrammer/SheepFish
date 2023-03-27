@@ -14,6 +14,7 @@ export interface ProductsState {
   error?: string
   filters: Filters
   categories: string[] | null
+  search: string
 }
 
 export enum ProductsActionsEnum {
@@ -21,6 +22,7 @@ export enum ProductsActionsEnum {
   SET_LOADING = "SET_LOADING",
   SET_ERROR = "SET_ERROR",
   SET_FILTERS = "SET_FILTERS",
+  SET_SEARCH = "SET_SEARCH",
   SET_CATEGORIES = "SET_CATEGORIES",
   DELETE_PRODUCT = "DELETE_PRODUCT",
   UPDATE_PRODUCT = "UPDATE_PRODUCT",
@@ -35,6 +37,11 @@ export interface SetProductsAction {
 export interface SetLoadingAction {
   type: ProductsActionsEnum.SET_LOADING
   payload: boolean
+}
+
+export interface SetSearchAction {
+  type: ProductsActionsEnum.SET_SEARCH
+  payload: string
 }
 
 export interface SetErrorAction {
@@ -76,3 +83,4 @@ export type ProductsAction =
   | AddProductAction
   | SetFiltersAction
   | SetCategories
+  | SetSearchAction

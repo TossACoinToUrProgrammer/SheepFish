@@ -6,9 +6,12 @@ import { useActions } from 'hooks/useActions'
 import Filters from 'components/filters'
 import Container from 'shared/ui/container'
 import { IProduct } from 'shared/models'
+import Search from 'components/search'
+import styles from './styles.module.scss'
+
 
 const ProductsPage = () => {
-    const { products, isLoading, filters, categories } = useTypedSelector(state => state.products)
+    const { products, isLoading, filters, categories, search } = useTypedSelector(state => state.products)
     const { fetchProducts, fetchCategories } = useActions()
 
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>()
@@ -27,14 +30,17 @@ const ProductsPage = () => {
 
         let filtered = [...products]
 
-        if (!filters.category || !filters.price) setFilteredProducts(filtered)
-
-        if (filters.category) {
-            filtered = filtered.filter(item => item.category === filters.category)
+        if (!filters.category && !filters.price && !search) {
+            setFilteredProducts(filtered)
+            return
         }
 
-        if (filters.price) {
-            filtered = filtered.filter(item => {
+        filtered = filtered.filter(item => {
+            if (filters.category && item.category !== filters.category) {
+                return false
+            }
+
+            if (filters.price) {
                 if (filters.price!.min && item.price < filters.price!.min) {
                     return false
                 }
@@ -42,21 +48,31 @@ const ProductsPage = () => {
                 if (filters.price!.max && filters.price!.max < item.price) {
                     return false
                 }
+            }
 
-                return true
-            })
-        }
+            if (search) {
+                const lowerCaseSearch = search.toLowerCase()
+
+                if (
+                    !item.title.toLowerCase().includes(lowerCaseSearch) &&
+                    !item.category.toLowerCase().includes(lowerCaseSearch)
+                ) {
+                    return false
+                }
+            }
+
+            return true
+        })
 
         setFilteredProducts(filtered)
-    }, [products, filters])
+    }, [products, filters, search])
 
     return (
         <Container>
             {isLoading && "Loading..."}
             <h1>Phone Store</h1>
 
-            <div>{categories && <Filters categories={categories} />}</div>
-            <div>Search</div>
+            <div className={styles.filters}><Filters categories={categories} /> <Search /></div>
             <div>{filteredProducts && <ProductsList products={filteredProducts} />}</div>
         </Container>
     )
