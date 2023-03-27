@@ -55,6 +55,9 @@ export default function productsReducer(
     case ProductsActionsEnum.SET_SEARCH:
       return { ...state, search: action.payload }
 
+    case ProductsActionsEnum.SET_MESSAGE:
+      return { ...state, message: action.payload }
+
     default:
       return state
   }

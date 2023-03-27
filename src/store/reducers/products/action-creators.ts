@@ -1,3 +1,4 @@
+import axios from "axios"
 import { IProduct } from "shared/models"
 import { AppDispatch } from "store"
 import {
@@ -9,6 +10,7 @@ import {
   SetErrorAction,
   SetFiltersAction,
   SetLoadingAction,
+  SetMessageAction,
   SetProductsAction,
   SetSearchAction,
   UpdateProductAction,
@@ -33,6 +35,10 @@ export const ProductsActionCreators = {
     type: ProductsActionsEnum.SET_FILTERS,
     payload: filters,
   }),
+  setMessage: (message: string): SetMessageAction => ({
+    type: ProductsActionsEnum.SET_MESSAGE,
+    payload: message,
+  }),
   setSearch: (search: string): SetSearchAction => ({
     type: ProductsActionsEnum.SET_SEARCH,
     payload: search,
@@ -56,9 +62,8 @@ export const ProductsActionCreators = {
   fetchProducts: () => async (dispatch: AppDispatch) => {
     try {
       dispatch(ProductsActionCreators.setLoading(true))
-      const response = await fetch(PRODUCTS_API)
-      const products = await response.json()
-      dispatch(ProductsActionCreators.setProducts(products.products))
+      const response = await axios.get(PRODUCTS_API)
+      dispatch(ProductsActionCreators.setProducts(response.data.products))
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
     }
@@ -76,11 +81,12 @@ export const ProductsActionCreators = {
   deleteProductThunk: (id: number) => async (dispatch: AppDispatch) => {
     try {
       dispatch(ProductsActionCreators.setLoading(true))
-      const res = await fetch(`${PRODUCTS_API}/${id}`, {
+      const res = await axios.delete(`${PRODUCTS_API}/${id}`, {
         method: "DELETE",
       })
-      if (res.status === 201) {
+      if (res.status === 200) {
         dispatch(ProductsActionCreators.deleteProduct(id))
+        dispatch(ProductsActionCreators.setMessage('Successfully deleted!'))
       }
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
@@ -89,13 +95,12 @@ export const ProductsActionCreators = {
   updateProductThunk: (product: IProduct) => async (dispatch: AppDispatch) => {
     try {
       dispatch(ProductsActionCreators.setLoading(true))
-      const res = await fetch(`${PRODUCTS_API}/${product.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product),
+      const res = await axios.put(`${PRODUCTS_API}/${product.id}`, {
+        body: product,
       })
-      if (res.status === 201) {
+      if (res.status === 200) {
         dispatch(ProductsActionCreators.updateProduct(product))
+        dispatch(ProductsActionCreators.setMessage('Successfully updated!'))
       }
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
@@ -104,13 +109,12 @@ export const ProductsActionCreators = {
   addProductThunk: (product: IProduct) => async (dispatch: AppDispatch) => {
     try {
       dispatch(ProductsActionCreators.setLoading(true))
-      const res = await fetch(`${PRODUCTS_API}/add`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product),
+      const res = await axios.post(`${PRODUCTS_API}/add`, {
+        body: product,
       })
-      if (res.status === 201) {
+      if (res.status === 200) {
         dispatch(ProductsActionCreators.addProduct(product))
+        dispatch(ProductsActionCreators.setMessage('Successfully added!'))
       }
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
