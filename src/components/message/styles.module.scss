@@ -1,0 +1,19 @@
+.popup {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(85, 85, 85);
+}
+
+.message {
+    border: 2px solid rgb(75, 213, 75);
+    color: rgb(75, 213, 75);
+}
+
+.error {
+  border: 2px solid rgb(182, 57, 46);
+  color: rgb(182, 57, 46);
+}

@@ -1,0 +1,27 @@
+.wrapper {
+  margin-bottom: 5px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+
+  select,
+  input {
+    margin-right: 10px;
+    margin-bottom: 5px;
+    height: 40px;
+    width: 150px;
+    font-family: "Poppins";
+  }
+
+  input {
+    padding-left: 5px;
+    border: none;
+    background-color: lightgray;
+  }
+}
+
+.title {
+  margin-bottom: 10px;
+}
