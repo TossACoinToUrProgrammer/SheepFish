@@ -12,7 +12,7 @@ import AddProductButton from 'components/addProductButton'
 
 
 const ProductsPage = () => {
-    const { products, isLoading, filters, categories, search } = useTypedSelector(state => state.products)
+    const { products, filters, categories, search } = useTypedSelector(state => state.products)
     const { fetchProducts, fetchCategories } = useActions()
 
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>()
@@ -40,20 +40,16 @@ const ProductsPage = () => {
             if (filters.category && item.category !== filters.category) {
                 return false
             }
-
             if (filters.price) {
                 if (filters.price!.min && item.price < filters.price!.min) {
                     return false
                 }
-
                 if (filters.price!.max && filters.price!.max < item.price) {
                     return false
                 }
             }
-
             if (search) {
                 const lowerCaseSearch = search.toLowerCase()
-
                 if (
                     !item.title.toLowerCase().includes(lowerCaseSearch) &&
                     !item.category.toLowerCase().includes(lowerCaseSearch)
