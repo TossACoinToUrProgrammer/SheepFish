@@ -8,6 +8,7 @@ import Container from 'shared/ui/container'
 import { IProduct } from 'shared/models'
 import Search from 'components/search'
 import styles from './styles.module.scss'
+import AddProductButton from 'components/addProductButton'
 
 
 const ProductsPage = () => {
@@ -69,11 +70,11 @@ const ProductsPage = () => {
 
     return (
         <Container>
-            {isLoading && "Loading..."}
             <h1>Phone Store</h1>
 
             <div className={styles.filters}><Filters categories={categories} /> <Search /></div>
             <div>{filteredProducts && <ProductsList products={filteredProducts} />}</div>
+            <AddProductButton />
         </Container>
     )
 }

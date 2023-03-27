@@ -3,11 +3,14 @@
   border-right: 1px solid gray;
   border-bottom: 1px solid gray;
   overflow-x: auto;
+  background-color: rgba(227, 225, 225, 0.763);
 }
 
 .row {
+  position: relative;
   padding: 10px 0;
   display: flex;
+  min-width: fit-content;
   border-top: 1px solid gray;
 }
 
@@ -18,7 +21,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  
+
   -moz-user-select: -moz-none;
   -o-user-select: none;
   -khtml-user-select: none;
@@ -94,5 +97,25 @@
   border-top: 7px solid rgb(6, 31, 89);
 }
 
-.top {
+.buttons {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 0;
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-right: 10px;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.row:hover .buttons {
+  display: flex;
 }

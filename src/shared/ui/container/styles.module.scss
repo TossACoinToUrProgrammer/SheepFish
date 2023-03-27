@@ -1,4 +1,5 @@
 .container {
+  padding: 60px 0;
   margin: 0 auto;
   max-width: 1920px;
 }
@@ -6,5 +7,11 @@
 @media screen and (max-width: 1920px) {
   .container {
     max-width: 1680px;
+  }
+}
+
+@media screen and (max-width: 1680px) {
+  .container {
+    padding: 60px 30px;
   }
 }

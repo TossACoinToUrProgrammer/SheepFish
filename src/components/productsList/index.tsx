@@ -4,6 +4,10 @@ import { IProduct } from 'shared/models'
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import SortArrows from './SortArrows'
+import { useNavigate } from 'react-router-dom'
+import { useActions } from 'hooks/useActions'
+import deleteIcon from 'assets/icons/delete.svg'
+import editIcon from 'assets/icons/edit-square.svg'
 
 interface Sort { key: keyof IProduct, inc?: boolean }
 
@@ -12,8 +16,10 @@ interface ProductsListProps {
 }
 
 const ProductsList: React.FC<ProductsListProps> = ({ products }) => {
+    const navigate = useNavigate()
     const [sortedProducts, setSortedProducts] = useState<IProduct[]>(products)
     const [sort, setSort] = useState<Sort>()
+    const { deleteProductThunk } = useActions()
 
     const sortBy = (key: keyof IProduct) => {
         setSort(prev => {
@@ -43,7 +49,7 @@ const ProductsList: React.FC<ProductsListProps> = ({ products }) => {
             const bool = inc ? (a[key] > b[key]) : (a[key] < b[key])
 
             // reverse sort for string fields, to match a-z
-            if(typeof a[key] === 'number') {
+            if (typeof a[key] === 'number') {
                 return bool ? -1 : 0
             }
             return !bool ? -1 : 0
@@ -51,6 +57,10 @@ const ProductsList: React.FC<ProductsListProps> = ({ products }) => {
 
         setSortedProducts(sorted)
     }, [sort, products])
+
+    const deleteHandler = (id: number) => {
+        deleteProductThunk(id)
+    }
 
     if (products.length === 0) {
         return <div>No results</div>
@@ -77,6 +87,10 @@ const ProductsList: React.FC<ProductsListProps> = ({ products }) => {
                 <div className={cn(styles.cell, styles.smCell)}>{product.stock}</div>
                 <div className={cn(styles.cell, styles.mdCell)}>{product.category}</div>
                 <div className={cn(styles.cell, styles.smCell)}>{product.price}</div>
+                <div className={styles.buttons}>
+                    <button onClick={() => navigate(`edit/${product.id}`)}><img src={editIcon} /></button>
+                    <button onClick={() => deleteHandler(product.id)}><img src={deleteIcon} /></button>
+                </div>
             </li>)}
         </ul>
     )
