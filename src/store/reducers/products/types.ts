@@ -1,15 +1,27 @@
-import { IProduct } from "models"
+import { IProduct } from "shared/models"
+
+export interface Filters {
+  category?: string
+  price?: {
+    min?: number
+    max?: number
+  }
+}
 
 export interface ProductsState {
   products: IProduct[] | null
   isLoading: boolean
   error?: string
+  filters: Filters
+  categories: string[] | null
 }
 
 export enum ProductsActionsEnum {
   SET_PRODUCTS = "SET_PRODUCTS",
   SET_LOADING = "SET_LOADING",
   SET_ERROR = "SET_ERROR",
+  SET_FILTERS = "SET_FILTERS",
+  SET_CATEGORIES = "SET_CATEGORIES",
   DELETE_PRODUCT = "DELETE_PRODUCT",
   UPDATE_PRODUCT = "UPDATE_PRODUCT",
   ADD_PRODUCT = "ADD_PRODUCT",
@@ -28,6 +40,16 @@ export interface SetLoadingAction {
 export interface SetErrorAction {
   type: ProductsActionsEnum.SET_ERROR
   payload: string
+}
+
+export interface SetFiltersAction {
+  type: ProductsActionsEnum.SET_FILTERS
+  payload: Filters
+}
+
+export interface SetCategories {
+  type: ProductsActionsEnum.SET_CATEGORIES
+  payload: string[]
 }
 
 export interface DeleteProductAction {
@@ -52,3 +74,5 @@ export type ProductsAction =
   | DeleteProductAction
   | UpdateProductAction
   | AddProductAction
+  | SetFiltersAction
+  | SetCategories

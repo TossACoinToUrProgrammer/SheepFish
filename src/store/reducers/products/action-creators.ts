@@ -1,10 +1,13 @@
-import { IProduct } from "models"
+import { IProduct } from "shared/models"
 import { AppDispatch } from "store"
 import {
     AddProductAction,
   DeleteProductAction,
+  Filters,
   ProductsActionsEnum,
+  SetCategories,
   SetErrorAction,
+  SetFiltersAction,
   SetLoadingAction,
   SetProductsAction,
   UpdateProductAction,
@@ -25,6 +28,14 @@ export const ProductsActionCreators = {
     type: ProductsActionsEnum.SET_ERROR,
     payload: error,
   }),
+  setFilters: (filters: Filters): SetFiltersAction => ({
+    type: ProductsActionsEnum.SET_FILTERS,
+    payload: filters,
+  }),
+  setCategories: (categories: string[]): SetCategories => ({
+    type: ProductsActionsEnum.SET_CATEGORIES,
+    payload: categories,
+  }),
   deleteProduct: (id: number): DeleteProductAction => ({
     type: ProductsActionsEnum.DELETE_PRODUCT,
     payload: id,
@@ -43,6 +54,16 @@ export const ProductsActionCreators = {
       const response = await fetch(PRODUCTS_API)
       const products = await response.json()
       dispatch(ProductsActionCreators.setProducts(products.products))
+    } catch (error) {
+      dispatch(ProductsActionCreators.setError("Something went wrong"))
+    }
+  },
+  fetchCategories: () => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(ProductsActionCreators.setLoading(true))
+      const response = await fetch(`${PRODUCTS_API}/categories`)
+      const categories = await response.json()
+      dispatch(ProductsActionCreators.setCategories(categories))
     } catch (error) {
       dispatch(ProductsActionCreators.setError("Something went wrong"))
     }

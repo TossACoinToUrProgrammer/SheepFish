@@ -1,0 +1,25 @@
+.wrapper {
+  padding: 15px 0;
+}
+
+.filters {
+  display: flex;
+
+  select,
+  input {
+    margin-right: 10px;
+    height: 40px;
+    width: 150px;
+    font-family: "Poppins";
+  }
+
+  input {
+    padding-left: 5px;
+    border: none;
+    background-color: lightgray;
+  }
+}
+
+.title {
+  margin-bottom: 10px;
+}

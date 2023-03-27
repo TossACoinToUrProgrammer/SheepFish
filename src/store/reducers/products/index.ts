@@ -3,6 +3,8 @@ import { ProductsAction, ProductsActionsEnum, ProductsState } from "./types"
 const initialState: ProductsState = {
   products: null,
   isLoading: false,
+  filters: {},
+  categories: null
 }
 
 export default function productsReducer(
@@ -42,6 +44,12 @@ export default function productsReducer(
 
     case ProductsActionsEnum.SET_PRODUCTS:
       return { ...state, products: action.payload, isLoading: false }
+
+    case ProductsActionsEnum.SET_FILTERS:
+      return { ...state, filters: action.payload }
+
+    case ProductsActionsEnum.SET_CATEGORIES:
+      return { ...state, categories: action.payload }
 
     default:
       return state
